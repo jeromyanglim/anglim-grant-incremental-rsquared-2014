@@ -1,0 +1,103 @@
+`r opts_knit$set(root.dir='..')`      
+
+# Initialise Project
+```{r}
+library(ProjectTemplate); load.project()
+# detach("package:personalityfacets")
+library(personalityfacets)
+```             
+
+# Demograhpics
+```{r}
+# number of cases
+nrow(ccases)
+
+# Gender
+table(ccases$demog1)
+mean(ccases$male, na.rm=TRUE) * 100  # Percentage Male
+(1 - mean(ccases$male, na.rm=TRUE)) * 100 # Percentage Female
+
+# Age
+summary(ccases$age) # Mean and quantiles for age
+sd(ccases$age, na.rm=TRUE) # SD for age
+```
+
+# Reliability Analysis
+```{r}
+descriptives_table <- data.frame(variable=c(v$ipip_factors, v$ipip_facets, 'swl'))
+descriptives_table$alpha <-  
+    c(scored$ipipfacets$alpha[,v$ipip_facets], 
+    scored$ipipscales$alpha[,v$ipip_factors],
+    scored$swl$alpha[,'swl'])
+
+descriptives_table$mean <-  apply(ccases[,c(v$ipip_factors, v$ipip_facets, 'swl')], 2, mean)
+descriptives_table$sd <- apply(ccases[,c(v$ipip_factors, v$ipip_facets, 'swl')], 2, sd)
+descriptives_table <- descriptives_table[c(1,6:11, 2, 12:17, 3, 18:23, 4, 24:29, 5, 30:35, 36), ]
+write.csv(descriptives_table, file='output/descriptives_table.csv')
+
+
+# Mean alpha reliability
+round(mean(scored$ipipfacets$alpha[,v$ipip_facets]), 3)
+round(mean(scored$ipipscales$alpha[,v$ipip_factors]), 3)
+
+
+```
+
+
+# Estimators for sample data
+```{r}
+set.seed(1234)
+FOLDS <- 100
+
+r_squared_vector <- function(dv, predictors, data, penter1=.05, penter2=.05, facets=TRUE) {
+    results <- list()
+    fit <- regression(dv, predictors, data)
+    results$olkinpratt_adjusted_rsquared <- lm_adjusted_r_squared(fit, 'olkinpratt')
+    results$ezekiel_adjusted_rsquared <-  lm_adjusted_r_squared(fit, 'ezekiel')
+    results$rsquared <- summary(fit)$r.squared
+    results$stepwise05 <- summary(stepwise_regression(dv, predictors, data, penter1))$r.squared
+    results$setpwise0083 <- summary(stepwise_regression(dv, predictors, data, penter2))$r.squared
+    results$cv_rsquared <-  as.numeric(k_fold_r_squared(fit, FOLDS)['cross_validated_r_squared'])
+    if (facets) {
+        results$bestfacets <-  summary(bestfacets_regression(dv='swl', 
+                                  facets=meta$ipipscales$subscale_name,  factors = meta$ipipscales$scale_name,
+                                  x=data))$r.squared
+    } else {
+        results$bestfacets <-results$rsquared
+    }
+    unlist(results)
+}
+
+pw$factors <- r_squared_vector('swl', v$ipip_factors, ccases, .05, .05, facets=FALSE)
+pw$facets <-  r_squared_vector('swl', v$ipip_facets, ccases, .05, .05/6, facets=TRUE)
+
+# construct table
+pw$combined_rsq <-rbind(pw$factors, pw$facets)
+row.names(pw$combined_rsq) <- c('factors', 'facets')
+
+pw$combined_rsq <- data.frame(t(pw$combined_rsq))
+pw$combined_rsq$diff <- pw$combined_rsq$facets -  pw$combined_rsq$factors
+write.csv(pw$combined_rsq, file='output/swl-prediction-by-estimator.csv')
+```
+
+# Bootstrap confidence intervals
+```
+# bootstrap adjusted r-square change
+bootfits <-bootstrap_r_squared_change(data=ccases, dv='swl', ivs1=v$ipip_factors, ivs2=v$ipip_facets,
+                                       iterations=10000, ci=.95,
+                                       method='olkinpratt')
+plot(density(bootfits$theta_hats))
+abline(v=bootfits$mean)
+abline(v=bootfits$sample_theta_hat, lty=2)
+sink('output/bootstrap_ci.txt')
+bootfits
+sink()
+
+```
+
+
+# Simulation
+```{r}
+source('simulation/call-simulation-rsquare-change.r')
+```
+

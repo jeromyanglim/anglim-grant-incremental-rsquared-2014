@@ -1,0 +1,23 @@
+
+BOOTSTRAP ESTIMATE OF POPULATION R-SQUARED CHANGE
+
+DESCRIPTION
+Variables - ivs1: ipip_neuroticism ipip_extraversion ipip_openness ipip_agreeableness ipip_conscientiousness 
+
+Variables - ivs2: ipip_n_anxiety ipip_n_anger ipip_n_depression ipip_n_self_consciousness ipip_n_immoderation ipip_n_vulnerability ipip_e_friendliness ipip_e_gregariousness ipip_e_assertiveness ipip_e_activity_level ipip_e_excitement_seeking ipip_e_cheerfulness ipip_o_imagination ipip_o_artistic_interests ipip_o_emotionality ipip_o_adventurousness ipip_o_intellect ipip_o_liberalism ipip_a_trust ipip_a_morality ipip_a_altruism ipip_a_cooperation ipip_a_modesty ipip_a_sympathy ipip_c_self_efficacy ipip_c_orderliness ipip_c_dutifulness ipip_c_achievement_striving ipip_c_self_discipline ipip_c_cautiousness 
+
+n = 337
+Adjusted r-squared method: olkinpratt
+Bootstrap iterations: 10000
+Bootstrap standard error: 0.0003140291
+Estimated Population R-squared:
+ivs1: 0.401 
+ivs2: 0.518 
+
+Estimated Population R-squared Change(ivs2 - ivs1):
+Sample estimate: 0.117 
+Mean of bootstrapped estimates : 0.117 
+
+Bootstrap Confidence Interval: 0.95 
+Confidence interval: ( 0.059 - 0.181 ) 
+Standard error: 0.031 
