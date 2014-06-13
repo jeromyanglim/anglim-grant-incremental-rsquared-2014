@@ -6,6 +6,8 @@ Version: 13th June 2014
 This repository includes data, a data processing script, R functions, and
 analysis code for the manuscript: "Incremental Criterion Prediction of Personality Facets over Factors: Obtaining Unbiased Estimates and Confidence Intervals"
 
+The latest version of this package can be obtained [here](https://github.com/jeromyanglim/anglim-grant-incremental-rsquared-2014).
+
 The file organisation is built around [ProjectTemplate](http://projecttemplate.net/).
 
 ## Requirements
@@ -77,15 +79,13 @@ Important files and folders include:
   calculates reliabilities which are used in subsequent analysis. We also use
   a strategy of creating a list object called `v` which has elements
   representing various sets of variables that are often called together. 
-* `output`: The output folder includes csv files produced by the rmd file. And
-  `output/facet-wellbeing-tables.xlsx` includes the output after some subsequent
-  formatting.
+
 
 ##  License: 
 * This data and analysis have been submitted for publication and is under review.
-  The repository is copyrighted and no permission is granted to re-analyse the
+  While under review the repository is copyrighted and no permission is granted to re-analyse the
   data for publication or reuse any of the materials. After publication
-  publication code and data will be GPL-2; all measurement scales
+  code and data will be licenced GPL-2; all measurement scales
   retain existing licences; 
-* Any publication that re-uses the data should cite this publication. 
+* Any subsequent publication that re-uses the data should cite this publication. 
 
