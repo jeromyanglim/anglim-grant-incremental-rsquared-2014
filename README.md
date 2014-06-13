@@ -15,9 +15,9 @@ The file organisation is built around [ProjectTemplate](http://projecttemplate.n
 * A working perl installation for running `gdata` to import xls files http://www.perl.org/get.html ; 
   OSX and Linux generally come with perl installed; Windows OS does not.
 * `config/global.dcf` lists required packages; `knitr` is also required to
-  compile the rmd file, and `ProjectTemplate` is also required. The following
-  commands should install the required R packages:
-
+  compile the rmd file, and `ProjectTemplate` is also required. 
+  
+The following commands should install the required R packages:
 
     install.packages("ProjectTemplate")
     install.packages("knitr")
@@ -29,10 +29,11 @@ The file organisation is built around [ProjectTemplate](http://projecttemplate.n
     install.packages("boot")
     install.packages("QuantPsyc")
     
-Also install the `personalityfacets` package. If you don't already have devtools installed, then install it
+Also install the `personalityfacets` package. If you don't already have devtools installed, then install it:
+
     install.packages("devtools")
 
-And then run
+And then run:
 
     library(devtools)
     install_github('personalityfacets', username='jeromyanglim')

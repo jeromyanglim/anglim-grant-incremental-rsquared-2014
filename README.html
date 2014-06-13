@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Incremental Criterion Prediction of Personality Facets over Factors: Obtaining Unbiased Estimates and Confidence Intervals</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>Incremental Criterion Prediction of Personality Facets over Factors: Obtaining Unbiased Estimates and Confidence Intervals</h1>
+
+<p>Version: 13th June 2014</p>
+
+<h2>Description</h2>
+
+<p>This repository includes data, a data processing script, R functions, and
+analysis code for the manuscript: &ldquo;Incremental Criterion Prediction of Personality Facets over Factors: Obtaining Unbiased Estimates and Confidence Intervals&rdquo;</p>
+
+<p>The latest version of this package can be obtained <a href="https://github.com/jeromyanglim/anglim-grant-incremental-rsquared-2014">here</a>.</p>
+
+<p>The file organisation is built around <a href="http://projecttemplate.net/">ProjectTemplate</a>.</p>
+
+<h2>Requirements</h2>
+
+<ul>
+<li>R &gt; 3.0 (possibly earlier versions will work)</li>
+<li>A working perl installation for running <code>gdata</code> to import xls files <a href="http://www.perl.org/get.html">http://www.perl.org/get.html</a> ; 
+OSX and Linux generally come with perl installed; Windows OS does not.</li>
+<li><code>config/global.dcf</code> lists required packages; <code>knitr</code> is also required to
+compile the rmd file, and <code>ProjectTemplate</code> is also required. </li>
+</ul>
+
+<p>The following commands should install the required R packages:</p>
+
+<pre><code>install.packages(&quot;ProjectTemplate&quot;)
+install.packages(&quot;knitr&quot;)
+install.packages(&quot;gdata&quot;)
+install.packages(&quot;car&quot;)
+install.packages(&quot;psych&quot;)
+install.packages(&quot;bootstrap&quot;)
+install.packages(&quot;MASS&quot;)
+install.packages(&quot;boot&quot;)
+install.packages(&quot;QuantPsyc&quot;)
+</code></pre>
+
+<p>Also install the <code>personalityfacets</code> package. If you don&#39;t already have devtools installed, then install it
+    install.packages(&ldquo;devtools&rdquo;)</p>
+
+<p>And then run</p>
+
+<pre><code>library(devtools)
+install_github(&#39;personalityfacets&#39;, username=&#39;jeromyanglim&#39;)
+</code></pre>
+
+<p>Alternatively a copy of the <code>personalityfacets</code> package is available in the <code>local-copy</code> folder of this repository.</p>
+
+<ul>
+<li>RStudio may also make it easier to convert the rmd file into a HTML file.
+Although <a href="http://stackoverflow.com/a/10654295/180892">scripts such as this could be used</a>.</li>
+</ul>
+
+<h2>How to use</h2>
+
+<ul>
+<li>The simplest way to examine the data and analyses is have RStudio installed
+and then double click on <code>rsquare-facets-2014-analysis.Rproj</code>. This should open
+the project in RStudio.</li>
+<li>Open the <code>rmd</code> file <code>reports/explore.rmd</code>. Then click &ldquo;Knit to HTML&rdquo;;
+This should import the data, load necessary libraries, import functions,
+prepare the data, and run all the analyses in the rmd file. If everything
+works, you will be presented with a compiled HTML file that shows analysis
+code and output interspersed. Note that the simulation chunk took around 20 hours to run on a modern desktop.</li>
+<li>Alternatively, to explore the data open <code>reports/explore.rmd</code> and run
+the first R code chunk to load the data, functions, and libraries. Each of the
+other code chunks can be run independently, or you could just explore the
+data.</li>
+</ul>
+
+<h2>Outline of how the project runs</h2>
+
+<p>ProjectTemplate provides a standardized way of organising code and data (see
+<a href="https://github.com/johnmyleswhite/ProjectTemplate">https://github.com/johnmyleswhite/ProjectTemplate</a> ). The following command
+completes loads data, processes data, and imports various libraries and required
+code:</p>
+
+<pre><code>library(&quot;ProjectTemplate&quot;); load.project()
+</code></pre>
+
+<p>Important files and folders include:</p>
+
+<ul>
+<li><code>config/global.dcf</code> stores a range of configuration options and also sets out
+which libraries need to be loaded</li>
+<li><code>data</code> : Data in the <code>data</code> folder is automatically imported with names that
+generally match the file name. The data in the xls file is imported one data
+file per sheet.</li>
+<li><code>lib</code> : Code in the <code>lib</code> folder provides various functions used during
+analyses or data preparation</li>
+<li><code>munge</code> : Code in this folder is used to process the data after it is
+imported. This includes creating scale scores, processing categorical
+variables, recoding various variables. The code there also, as a by product,
+calculates reliabilities which are used in subsequent analysis. We also use
+a strategy of creating a list object called <code>v</code> which has elements
+representing various sets of variables that are often called together. </li>
+</ul>
+
+<h2>License:</h2>
+
+<ul>
+<li>This data and analysis have been submitted for publication and is under review.
+While under review the repository is copyrighted and no permission is granted to re-analyse the
+data for publication or reuse any of the materials. After publication
+code and data will be licenced GPL-2; all measurement scales
+retain existing licences; </li>
+<li>Any subsequent publication that re-uses the data should cite this publication. </li>
+</ul>
+
+</body>
+
+</html>
+
