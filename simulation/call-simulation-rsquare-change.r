@@ -21,10 +21,10 @@ specification$generator <- c('real', 'none')
 generator_function <- c(generated_simulated_real_dataset, generate_simulated_dataset)
 specification$theta <- c(.1508342, 0)
 specification$n <- c(50, 100, 200, 1000)
-specification$estimator <- c('stepwise05', 'stepwise0083', 'bestfacet', 
-                             'ezekiel', 'olkinpratt', 'rsquare') # c('stepwise05', 'stepwise0083', 'bestfacet', 'adjrsquare')
-estimator_function <- c(estimator_stepwise05, estimator_stepwise0083, estimator_bestfacet, 
-                        estimator_adj_r_squared_ezekiel, estimator_adj_r_squared_olkinpratt, estimator_r_square)
+specification$estimator <- c('olkinpratt', 'ezekiel',  'rsquare', 
+                             'stepwise05', 'stepwise0083', 'bestfacet', ) # c('stepwise05', 'stepwise0083', 'bestfacet', 'adjrsquare')
+estimator_function <- c(estimator_adj_r_squared_olkinpratt, estimator_adj_r_squared_ezekiel, estimator_r_square,
+                        estimator_stepwise05, estimator_stepwise0083, estimator_bestfacet)
 specification$seed <- 1234
 
 # generator: (named vector of functions) each function generates a sample
@@ -55,12 +55,6 @@ dataindex <- merge(dataindex, design)
 # for each row of dataindex create a dataset
 # each generator has a name and takes a sample size argument
 dataindex <- dataindex[order(dataindex$dataindex_id), ]
-dataset <- vector('list', length=nrow(dataindex))
-for (i in seq(dataindex$dataindex_id)) {
-    dataset[[i]] <- generator_function[[dataindex$generator_id[i]]](dataindex$n[i])
-    # status bar
-    if(i %% 100 == 0) cat("Data:", 100 * i/nrow(dataindex),"% complete...\n")
-}
 
 # create estimator
 estimator <- data.frame(estimator_id=seq(specification$estimator), 
@@ -74,13 +68,17 @@ dataindexestimator$dataindexestimator_id <- seq(nrow(dataindexestimator))
 
 
 # estimate thetahat for each dataindexestimator
-for (i in seq(nrow(dataindexestimator))) {
-    dataindexestimator$theta_hat[i] <- 
-        estimator_function[[ dataindexestimator$estimator_id[i] ]](
-            dataset[[ dataindexestimator$dataindex_id[i] ]]  
-            )
+for (i in seq(dataindex$dataindex_id)) {
+    dataset <- generator_function[[dataindex$generator_id[i]]](dataindex$n[i])
+
+    
+    for (j in seq(length(estimator_function))) {
+        dataindexestimator[ dataindexestimator$dataindex_id == i & dataindexestimator$estimator_id == j,
+                            'theta_hat'] <- estimator_function[[ j ]](dataset)
+    }
     # status bar
-    if(i %% 100 == 0) cat("Estimation: ", 100 * i/nrow(dataindexestimator),"% complete...\n")
+    if(i %% 100 == 0) cat(100 * i/nrow(dataindex),"% complete...\n")
+    
 }
 
 # estimator_summary
@@ -106,9 +104,9 @@ for (i in seq(nrow(estimator_summary))) {
 }
 
 
-
 # reported_table
 produce_reported_table  <- function(DV) {
+    estimator_summary <- estimator_summary[order(estimator_summary$estimator_summary_id), ]
     rtable <- estimator_summary[, c('estimator', 'generator', 'n', DV)]
     rtable <- reshape(rtable, idvar=c('generator', 'estimator'), timevar='n', direction='wide')
     rtable <- rtable[order(rtable$generator), ]

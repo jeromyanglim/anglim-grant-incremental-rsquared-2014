@@ -39,8 +39,6 @@ write.csv(descriptives_table, file='output/descriptives_table.csv')
 # Mean alpha reliability
 round(mean(scored$ipipfacets$alpha[,v$ipip_facets]), 3)
 round(mean(scored$ipipscales$alpha[,v$ipip_factors]), 3)
-
-
 ```
 
 
@@ -81,7 +79,7 @@ write.csv(pw$combined_rsq, file='output/swl-prediction-by-estimator.csv')
 ```
 
 # Bootstrap confidence intervals
-```
+```{r}
 # bootstrap adjusted r-square change
 bootfits <-bootstrap_r_squared_change(data=ccases, dv='swl', ivs1=v$ipip_factors, ivs2=v$ipip_facets,
                                        iterations=10000, ci=.95,
@@ -92,7 +90,6 @@ abline(v=bootfits$sample_theta_hat, lty=2)
 sink('output/bootstrap_ci.txt')
 bootfits
 sink()
-
 ```
 
 

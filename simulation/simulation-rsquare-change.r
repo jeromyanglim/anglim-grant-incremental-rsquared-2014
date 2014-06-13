@@ -12,7 +12,7 @@ generated_simulated_real_dataset <- function(n) {
     # generate simulated data for predictors
     x_sim <- mvrnorm(n, mu=rep(0, nrow(r_factor)), Sigma=r_factor)
     # data.frame(x_sim)
-    x_sim
+    data.frame(x_sim)
 }
 
 generate_simulated_dataset <- function(n) {
