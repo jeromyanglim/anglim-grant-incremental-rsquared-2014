@@ -41,22 +41,17 @@ Alternatively a copy of the `personalityfacets` package is available in the `loc
 
 ## How to use
 * The simplest way to examine the data and analyses is have RStudio installed
-  and then double click on `analysis-facets-wellbeing.Rproj`. This should open
+  and then double click on `rsquare-facets-2014-analysis.Rproj`. This should open
   the project in RStudio.
-* Open the `rmd` file `reports/paper-analyses.rmd`. Then click "Knit to HTML";
+* Open the `rmd` file `reports/explore.rmd`. Then click "Knit to HTML";
   This should import the data, load necessary libraries, import functions,
   prepare the data, and run all the analyses in the rmd file. If everything
   works, you will be presented with a compiled HTML file that shows analysis
-  code and output interspersed.
-* Alternatively, to explore the data open `reports/paper-analyses.rmd` and run
+  code and output interspersed. Note that the simulation chunk took around 20 hours to run on a modern desktop.
+* Alternatively, to explore the data open `reports/explore.rmd` and run
   the first R code chunk to load the data, functions, and libraries. Each of the
   other code chunks can be run independently, or you could just explore the
   data.
-* `reports/paper-analysis.rmd` is an R Markdown file that includes various
-  R code chunks. The file is designed so that each code chunk besides the first
-  is dependent on the first code chunk (i.e., for generating data, processing
-  data, importing libraries, etc.), but there are no dependencies between code
-  chunks. 
 
 
 ## Outline of how the project runs
@@ -90,7 +85,7 @@ Important files and folders include:
 * This data and analysis have been submitted for publication and is under review.
   The repository is copyrighted and no permission is granted to re-analyse the
   data for publication or reuse any of the materials. After publication
-  publication code and data will ultimately be GPL-2; all measurement scales
-  retain existing licence; 
+  publication code and data will be GPL-2; all measurement scales
+  retain existing licences; 
 * Any publication that re-uses the data should cite this publication. 
 
