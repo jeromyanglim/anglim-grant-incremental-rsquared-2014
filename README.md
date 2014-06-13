@@ -16,7 +16,8 @@ The file organisation is built around [ProjectTemplate](http://projecttemplate.n
   OSX and Linux generally come with perl installed; Windows OS does not.
 * `config/global.dcf` lists required packages; `knitr` is also required to
   compile the rmd file, and `ProjectTemplate` is also required. The following
-  commands should install the required R packages
+  commands should install the required R packages:
+
 
     install.packages("ProjectTemplate")
     install.packages("knitr")
