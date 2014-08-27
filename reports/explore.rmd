@@ -98,3 +98,29 @@ sink()
 source('simulation/call-simulation-rsquare-change.r')
 ```
 
+
+# Incremental prediction of facets
+```{r}
+# correlations between big 5 and swl
+round(cor(ccases$swl, ccases[,v$ipip_factors]), 2)
+
+# standardised beta for big 5 on swl
+zccases <- data.frame(scale(ccases[,c('swl', v$ipip_factors)]))
+factor_lm <- regression('swl', v$ipip_factors, zccases)
+round(coef(factor_lm), 2)
+
+
+semirtable <- facets_semi_partial_r_table('swl', v$ipip_facets, rep(v$ipip_factors, each=6),  
+                                          ccases, return_pvalue = TRUE)
+alpha <- .001
+semirtable$star <- cbind(semirtable$p[,1:2], ifelse(semirtable$p[,3:6]<alpha, "*", ""))
+ 
+write.csv(semirtable$semir, file='output/semirtable.csv')
+write.csv(semirtable$star, file='output/starsemirtable.csv')
+
+# get mean absolute correlation by type of correlation
+meanr <- sapply(semirtable[,3:6], function(X) mean(abs(X)))
+round(meanr, 3)
+
+```
+
